@@ -1,0 +1,111 @@
+local EventManager = loadstring(game:HttpGet('https://pastebin.com/raw/3YaYx4gi'))()
+
+local PlayerService = game:GetService'Players'
+local RunService = game:GetService'RunService'
+local LocalPlayer = PlayerService.LocalPlayer
+
+local Connections = {}
+local Players = {}
+
+local wait = function(t)if t then return wait(t) end;return RunService.Heartbeat:Wait()end
+
+local function PlayerAdded(Player)
+	if Player and Player ~= LocalPlayer then
+		local Table = {}
+		function Table.GetCharacter()
+			return Table.Character or Player.Character or Player.CharacterAdded:Wait()
+		end
+
+		Table.Character = Table.GetCharacter()
+		Table.HumanoidAdded = EventManager:CreateEvent(Player.Name .. ' - HumanoidAdded')
+		Table.HumanoidRemoved = EventManager:CreateEvent(Player.Name .. ' - HumanoidRemoved')
+		Table.HumanoidRootPartAdded = EventManager:CreateEvent(Player.Name .. ' - HumanoidRootPartAdded')
+		Table.HumanoidRootPartRemoved = EventManager:CreateEvent(Player.Name .. ' - HumanoidRootPartRemoved')
+
+		function Table.PartRemoved(Part)
+			if Part then
+				local Name = Part.Name or Part
+				if Name == 'Humanoid' then
+					Table.HumanoidRemoved:Fire()
+				elseif Name == 'HumanoidRootPart' then
+					Table.HumanoidRootPartRemoved:Fire()
+				end
+			end
+		end
+
+		function Table.PartAdded(Part)
+			if Part then
+				local Name = Part.Name or Part
+				if Name == 'Humanoid' then
+					Table.HumanoidAdded:Fire()
+				elseif Name == 'HumanoidRootPart' then
+					Table.HumanoidRootPartAdded:Fire()
+				end
+			end
+		end
+
+		function Table.CharacterRemoved()
+			Table.PartRemoved('Humanoid')
+			Table.PartRemoved('HumanoidRootPart')
+			Table.Character = nil
+		end
+
+		function Table.CharacterAdded(Character)
+			if Character then
+				Table.Character = Character
+
+				local CharacterRemovedConnection = Character:WaitForChild'Humanoid'.Died:Connect(Table.CharacterRemoved)
+				local PartAddedConnection = Character.ChildAdded:Connect(PartAdded)
+				local PartRemovedConnection = Character.ChildRemoved:Connect(Table.PartRemoved)
+
+				Table.CharacterRemovedConnection = CharacterRemovedConnection
+				Table.PartAddedConnection = PartAddedConnection
+				Table.PartRemovedConnection = PartRemovedConnection
+
+				Table.PartAdded( (Character:FindFirstChild'Humanoid' or nil) )
+				Table.PartAdded( (Character:FindFirstChild'HumanoidRootPart' or nil) )
+
+				table.insert(Connections, CharacterRemovedConnection)
+				table.insert(Connections, PartAddedConnection)
+				table.insert(Connections, PartRemovedConnection)
+			end
+		end
+
+		local CharacterAddedConnection = Player.CharacterAdded:connect(Table.CharacterAdded)
+		Table.CharacterAddedConnection = CharacterAddedConnection
+
+		table.insert(Connections, CharacterAddedConnection)
+
+		Table.CharacterAdded(Table.GetCharacter())
+
+		Players[Player] = Table
+	end
+end
+local function PlayerRemoved(Player)
+	if Player and Player ~= LocalPlayer and Players[Player] then
+		local Table = Players[Player]
+
+		Players[Player] = nil
+		Table = nil
+	end
+end
+
+for Index, Player in next, PlayerService:GetPlayers() do
+	PlayerAdded(Player)
+end
+
+table.insert(Connections, PlayerService.PlayerAdded:Connect(PlayerAdded))
+table.insert(Connections, PlayerService.PlayerRemoving:Connect(PlayerRemoved))
+
+KeyDownConnection = LocalPlayer:GetMouse().KeyDown:Connect(function(key)
+	if key == '=' then
+		for Index, Connection in next, Connections do
+			Connection:Disconnect()
+			Connection = nil
+		end
+
+		KeyDownConnection:Disconnect()
+	end
+end)
+
+return Players
