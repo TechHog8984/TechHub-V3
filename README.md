@@ -9,4 +9,4 @@ The current TechHub is very different than the original versions.
 > Where can I find TechHub?
 
 You can find the loadstring to this script [here](script/loadstring.lua).<br>
-                      or the short version [heere](script/short loadstring.lua).
+                      or the short version [here](script/loadstring.lua).
