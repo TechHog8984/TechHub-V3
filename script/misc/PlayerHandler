@@ -12,17 +12,19 @@ local wait = function(t)if t then return wait(t) end;return RunService.Heartbeat
 local function PlayerAdded(Player)
 	if Player and Player ~= LocalPlayer then
 		local Table = {}
+		local Character = Player.Character or Player.CharacterAdded:Wait()
 		function Table.GetCharacter()
 			return Table.Character or Player.Character or Player.CharacterAdded:Wait()
 		end
 
-		Table.Character = Table.GetCharacter()
+		Table.CharacterAdded = EventManager:CreateEvent(Player.Name .. ' - CharacterAdded')
+		Table.CharacterRemoved = EventManager:CreateEvent(Player.name .. ' - CharacterRemoved')
 		Table.HumanoidAdded = EventManager:CreateEvent(Player.Name .. ' - HumanoidAdded')
 		Table.HumanoidRemoved = EventManager:CreateEvent(Player.Name .. ' - HumanoidRemoved')
 		Table.HumanoidRootPartAdded = EventManager:CreateEvent(Player.Name .. ' - HumanoidRootPartAdded')
 		Table.HumanoidRootPartRemoved = EventManager:CreateEvent(Player.Name .. ' - HumanoidRootPartRemoved')
 
-		function Table.PartRemoved(Part)
+		function PartRemoved(Part)
 			if Part then
 				local Name = Part.Name or Part
 				if Name == 'Humanoid' then
@@ -33,7 +35,7 @@ local function PlayerAdded(Player)
 			end
 		end
 
-		function Table.PartAdded(Part)
+		function PartAdded(Part)
 			if Part then
 				local Name = Part.Name or Part
 				if Name == 'Humanoid' then
@@ -44,39 +46,45 @@ local function PlayerAdded(Player)
 			end
 		end
 
-		function Table.CharacterRemoved()
-			Table.PartRemoved('Humanoid')
-			Table.PartRemoved('HumanoidRootPart')
+		function CharacterRemoved()
+			PartRemoved('Humanoid')
+			PartRemoved('HumanoidRootPart')
+			Table.CharacterRemoved:Fire()
 			Table.Character = nil
+			Table.CharacterRemovedConnection:Disconnect()
+			Table.PartAddedConnection:Disconnect()
+			Table.PartRemovedConnection:Disconnect()
 		end
 
-		function Table.CharacterAdded(Character)
+		function CharacterAdded(Character)
 			if Character then
 				Table.Character = Character
+				Table.CharacterAdded:Fire(Character)
 
-				local CharacterRemovedConnection = Character:WaitForChild'Humanoid'.Died:Connect(Table.CharacterRemoved)
-				local PartAddedConnection = Character.ChildAdded:Connect(PartAdded)
-				local PartRemovedConnection = Character.ChildRemoved:Connect(Table.PartRemoved)
+				CharacterRemovedConnection = Character:WaitForChild'Humanoid'.Died:Connect(CharacterRemoved)
+				PartAddedConnection = Character.ChildAdded:Connect(PartAdded)
+				PartRemovedConnection = Character.ChildRemoved:Connect(PartRemoved)
 
 				Table.CharacterRemovedConnection = CharacterRemovedConnection
 				Table.PartAddedConnection = PartAddedConnection
 				Table.PartRemovedConnection = PartRemovedConnection
 
-				Table.PartAdded( (Character:FindFirstChild'Humanoid' or nil) )
-				Table.PartAdded( (Character:FindFirstChild'HumanoidRootPart' or nil) )
+				PartAdded( (Character:FindFirstChild'Humanoid' or nil) )
+				PartAdded( (Character:FindFirstChild'HumanoidRootPart' or nil) )
+
 
 				table.insert(Connections, CharacterRemovedConnection)
 				table.insert(Connections, PartAddedConnection)
 				table.insert(Connections, PartRemovedConnection)
 			end
 		end
+		
+		CharacterAdded(Table.GetCharacter())
 
-		local CharacterAddedConnection = Player.CharacterAdded:connect(Table.CharacterAdded)
-		Table.CharacterAddedConnection = CharacterAddedConnection
+		local CharacterAddedConnection = Player.CharacterAdded:connect(CharacterAdded)
+		CharacterAddedConnection = CharacterAddedConnection
 
 		table.insert(Connections, CharacterAddedConnection)
-
-		Table.CharacterAdded(Table.GetCharacter())
 
 		Players[Player] = Table
 	end
