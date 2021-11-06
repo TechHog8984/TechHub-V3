@@ -1,0 +1,1 @@
+loadstring((function()local success, body = pcall(function()return syn.request{Url = 'https://raw.githubusercontent.com/TechHog8984/TechHub-V3/main/script/source.lua', Method = 'GET'}.Body;end);if success and body then return body;else return game:HttpGet('https://raw.githubusercontent.com/TechHog8984/TechHub-V3/main/script/source.lua');end;end)())()
