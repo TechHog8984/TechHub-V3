@@ -1,24 +1,26 @@
-function max(...)
-    local value = nil
-    for i,v in next, {...} do
-        if not value then
-            value = v
-        elseif v > value then
-            value = v
+function minmax(decider, ...)
+    if decider and (decider == 'max' or decider == 'min') then
+        if decider == 'max' or decider == 'min' then
+            local value = nil
+            for i,v in next, {...} do
+                if not value then
+                    value = v
+                elseif (decider == 'max' and v > value) or (decider == 'min' and v < value) then
+                    value = v
+                end
+            end
+
+            return value
         end
+    else
+        return error('expected \'max\' or \'min\' (arg 1), got \'' .. tostring(decider) .. '\'')
     end
-    return value
-end
-function min(...)
-    local value = nil
-    for i,v in next, {...} do
-        if not value then
-            value = v
-        elseif v < value then
-            value = v
-        end
-    end
-    return value
 end
 
-return {max = max, min = min}
+return setmetatable({}, {
+    __index = function(self, key)
+        return function(...)
+            return minmax(key, ...)
+        end
+    end
+})
