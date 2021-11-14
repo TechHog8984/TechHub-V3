@@ -1,4 +1,6 @@
 local function creategui()
+	--GuiToLua V3
+
 	--objects
 	local V3_library = Instance.new'ScreenGui'
 
@@ -8,10 +10,14 @@ local function creategui()
 	local UIListLayout = Instance.new'UIListLayout'
 	local dropdowntemplate = Instance.new'TextButton'
 	local text = Instance.new'TextLabel'
+	local dropdowncorner = Instance.new'UICorner'
 	local textboxtemplate = Instance.new'TextBox'
+	local textboxcorner = Instance.new'UICorner'
 	local labeltemplate = Instance.new'TextLabel'
+	local labelcorner = Instance.new'UICorner'
 	local buttontemplate = Instance.new'TextButton'
 	local text__2 = Instance.new'TextLabel'
+	local buttoncorner = Instance.new'UICorner'
 	local sidebar = Instance.new'Frame'
 	local sectionbuttontemplate = Instance.new'TextButton'
 	local text__3 = Instance.new'TextLabel'
@@ -21,8 +27,7 @@ local function creategui()
 	local sideline__2 = Instance.new'TextLabel'
 	local subtitle = Instance.new'TextLabel'
 	local title = Instance.new'TextLabel'
-	local UICorner = Instance.new'UICorner'
-	local sideline__2 = Instance.new'TextLabel'
+	local framecorner = Instance.new'UICorner'
 	local close = Instance.new'TextButton'
 	local minimize = Instance.new'TextButton'
 
@@ -88,6 +93,10 @@ local function creategui()
 	text.TextColor3 = Color3.fromRGB(255, 255, 255)
 	text.TextSize = 17
 
+	dropdowncorner.CornerRadius = UDim.new(0, 4)
+	dropdowncorner.Name = 'dropdowncorner'
+	dropdowncorner.Parent = text
+
 	textboxtemplate.BackgroundColor3 = Color3.fromRGB(212, 124, 0)
 	textboxtemplate.BorderSizePixel = 0
 	textboxtemplate.Name = 'textboxtemplate'
@@ -101,6 +110,10 @@ local function creategui()
 	textboxtemplate.TextColor3 = Color3.fromRGB(255, 255, 255)
 	textboxtemplate.TextSize = 17
 
+	textboxcorner.CornerRadius = UDim.new(0, 4)
+	textboxcorner.Name = 'textboxcorner'
+	textboxcorner.Parent = textboxtemplate
+
 	labeltemplate.BackgroundColor3 = Color3.fromRGB(212, 124, 0)
 	labeltemplate.BorderSizePixel = 0
 	labeltemplate.Name = 'labeltemplate'
@@ -112,6 +125,10 @@ local function creategui()
 	labeltemplate.Text = 'textlabel'
 	labeltemplate.TextColor3 = Color3.fromRGB(255, 255, 255)
 	labeltemplate.TextSize = 17
+
+	labelcorner.CornerRadius = UDim.new(0, 4)
+	labelcorner.Name = 'labelcorner'
+	labelcorner.Parent = labeltemplate
 
 	buttontemplate.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	buttontemplate.BackgroundTransparency = 1
@@ -134,6 +151,10 @@ local function creategui()
 	text__2.Text = 'textbutton'
 	text__2.TextColor3 = Color3.fromRGB(255, 255, 255)
 	text__2.TextSize = 17
+
+	buttoncorner.CornerRadius = UDim.new(0, 4)
+	buttoncorner.Name = 'buttoncorner'
+	buttoncorner.Parent = text__2
 
 	sidebar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	sidebar.BackgroundTransparency = 1
@@ -201,8 +222,8 @@ local function creategui()
 	sideline__2.BorderSizePixel = 0
 	sideline__2.Name = 'sideline'
 	sideline__2.Parent = mainframe
-	sideline__2.Position = UDim2.new(UDim.new(0.26763486862183, 0), UDim.new(0, 0))
-	sideline__2.Size = UDim2.new(UDim.new(0.0041493778117001, 0), UDim.new(1, 0))
+	sideline__2.Position = UDim2.new(UDim.new(0.27128714323044, 0), UDim.new(0.06341315060854, 0))
+	sideline__2.Size = UDim2.new(UDim.new(0.72871285676956, 0), UDim.new(0.0062305293977261, 0))
 	sideline__2.Font = Enum.Font.SourceSans
 	sideline__2.Text = ''
 	sideline__2.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -234,19 +255,9 @@ local function creategui()
 	title.TextSize = 21
 	title.TextXAlignment = Enum.TextXAlignment.Left
 
-	UICorner.CornerRadius = UDim.new(0, 4)
-	UICorner.Parent = mainframe
-
-	sideline__2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	sideline__2.BorderSizePixel = 0
-	sideline__2.Name = 'sideline'
-	sideline__2.Parent = mainframe
-	sideline__2.Position = UDim2.new(UDim.new(0.27128714323044, 0), UDim.new(0.06341315060854, 0))
-	sideline__2.Size = UDim2.new(UDim.new(0.72871285676956, 0), UDim.new(0.0062305293977261, 0))
-	sideline__2.Font = Enum.Font.SourceSans
-	sideline__2.Text = ''
-	sideline__2.TextColor3 = Color3.fromRGB(0, 0, 0)
-	sideline__2.TextSize = 14
+	framecorner.CornerRadius = UDim.new(0, 4)
+	framecorner.Name = 'framecorner'
+	framecorner.Parent = mainframe
 
 	close.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 	close.BackgroundTransparency = 1
@@ -272,10 +283,7 @@ local function creategui()
 	minimize.TextColor3 = Color3.fromRGB(255, 255, 255)
 	minimize.TextSize = 21
 
-	local fakeuicorner = Instance.new'UICorner'
-	fakeuicorner.CornerRadius = UDim.new(0, 5)
-
-	return V3_library, mainframe, title, subtitle, sidebar, sectionbuttontemplate, sectiontemplate, labeltemplate, buttontemplate, textboxtemplate, dropdowntemplate, fakeuicorner, minimize, close
+	return V3_library, mainframe, title, subtitle, sidebar, sectionbuttontemplate, sectiontemplate, labeltemplate, buttontemplate, textboxtemplate, dropdowntemplate, minimize, close
 end
 
 local function clone(object)
@@ -295,7 +303,7 @@ local function smoothdrag(frame)
 	local function updateInput(input)
 		local Delta = input.Position - dragStart
 		local Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + Delta.X, startPos.Y.Scale, startPos.Y.Offset + Delta.Y)
-		game:GetService("TweenService"):Create(frame, TweenInfo.new(dragSpeed), {Position = Position}):Play()
+		game:GetService("TweenService"):Create(frame, TweenInfo.new(dragSpeed, 2), {Position = Position}):Play()
 	end
 
 	frame.InputBegan:Connect(function(input)
@@ -323,6 +331,7 @@ local function smoothdrag(frame)
 		end
 	end)
 end
+
 local function tween(object, time, info)
 	return game:GetService'TweenService':Create(object, TweenInfo.new(time, 8), info)
 end
@@ -340,7 +349,7 @@ function library:CreateGui(guiname, titletext, subtitletext)
 	local titletext = titletext or guiname
 	local subtitletext = subtitletext or 'subtitle'
 
-	local gui, mainframe, title, subtitle, sidebar, sectionbuttontemplate, sectiontemplate, labeltemplate, buttontemplate, textboxtemplate, dropdowntemplate, uicorner, minimize, close = creategui()
+	local gui, mainframe, title, subtitle, sidebar, sectionbuttontemplate, sectiontemplate, labeltemplate, buttontemplate, textboxtemplate, dropdowntemplate, minimize, close = creategui()
 
 	gui.Name = guiname
 	title.Text = titletext
@@ -454,14 +463,10 @@ function library:CreateGui(guiname, titletext, subtitletext)
 			local buttonName = buttonName or 'button'
 
 			local button = buttontemplate:Clone()
-			local uicorner = uicorner:Clone()
-
 			button.Name = buttonName
 			button.text.Text = buttonName
 			button.Parent = sectionframe
 			button.Visible = true
-
-			uicorner.Parent = button
 
 			if clickcallback then
 				button.MouseButton1Click:connect(clickcallback)
@@ -473,14 +478,11 @@ function library:CreateGui(guiname, titletext, subtitletext)
 			local labelName = labelName or 'button'
 
 			local label = labeltemplate:Clone()
-			local uicorner = uicorner:Clone()
 
 			label.Name = labelName
 			label.Text = labelName
 			label.Parent = sectionframe
 			label.Visible = true
-
-			uicorner.Parent = label
 
 			return label
 		end
@@ -488,14 +490,11 @@ function library:CreateGui(guiname, titletext, subtitletext)
 			local boxName = boxName or 'button'
 
 			local box = textboxtemplate:Clone()
-			local uicorner = uicorner:Clone()
 
 			box.Name = boxName
 			box.PlaceholderText = boxName
 			box.Parent = sectionframe
 			box.Visible = true
-
-			uicorner.Parent = box
 
 			if textchangedcallback then
 				box:GetPropertyChangedSignal('Text'):connect(function()
