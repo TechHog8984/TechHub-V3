@@ -11,7 +11,7 @@ function minmax(decider, ...)
 
         return value
     else
-        return error('expected \'max\' or \'min\' (arg 1), got \'' .. tostring(decider) .. '\'')
+        return error('expected \'max\' or \'min\' (arg 1), got \'' .. tostring(decider) .. '\'', 2)
     end
 end
 
