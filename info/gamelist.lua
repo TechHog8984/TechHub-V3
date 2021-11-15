@@ -6,5 +6,5 @@
     "Gods of Glory" : 5665787539, 
     "Risky Rollers" : 6065752559,
     "Roll Call" : 6251081051,
-    "Tower of Hell" : 1962086868,
+    "Tower of Hell" : 1962086868
 }
