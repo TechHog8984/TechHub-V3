@@ -20,7 +20,6 @@ function EventManager:CreateEvent(id)
 		function connection:Disconnect()
 			connection.func = nil
 			connection.enabled = false
-			table.remove(table.find(connections, connection))
 			connection = nil
 		end
 
@@ -39,7 +38,10 @@ function EventManager:CreateEvent(id)
 		local args = {...}
 		for i, connection in pairs(connections) do
 			if connection and connection.func and connection.enabled == true then
-				coroutine.wrap(function()connection.func(table.unpack(args))end)
+				local success, err = pcall(coroutine.wrap(function()connection.func(table.unpack(args))end))
+				if not success and err then
+					error(err, 2)
+				end
 			end
 		end
 	end
