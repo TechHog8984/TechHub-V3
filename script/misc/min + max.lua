@@ -1,17 +1,15 @@
 function minmax(decider, ...)
     if decider and (decider == 'max' or decider == 'min') then
-        if decider == 'max' or decider == 'min' then
-            local value = nil
-            for i,v in next, {...} do
-                if not value then
-                    value = v
-                elseif (decider == 'max' and v > value) or (decider == 'min' and v < value) then
-                    value = v
-                end
+        local value = nil
+        for i,v in next, {...} do
+            if not value then
+                value = v
+            elseif (decider == 'max' and v > value) or (decider == 'min' and v < value) then
+                value = v
             end
-
-            return value
         end
+
+        return value
     else
         return error('expected \'max\' or \'min\' (arg 1), got \'' .. tostring(decider) .. '\'')
     end
