@@ -46,7 +46,7 @@ function EventManager:CreateEvent(id)
 		end
 	end
 
-	local realid = id or #self
+	local realid = id or #self + 1
 	self[realid] = event
 	return event
 end
