@@ -121,3 +121,5 @@ local Players = {} do
 	table.insert(Connections, PlayerService.PlayerAdded:Connect(PlayerAdded))
 	table.insert(Connections, PlayerService.PlayerRemoving:Connect(PlayerRemoved))
 end
+
+return Players
