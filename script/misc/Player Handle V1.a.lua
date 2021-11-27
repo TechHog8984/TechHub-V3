@@ -2,6 +2,7 @@ local httpget 					= game.HttpGet
 local getservice 				= game.GetService
 
 local EventManager 				= assert(loadstring(httpget(game, 'https://raw.githubusercontent.com/TechHog8984/TechHub-V3/main/script/misc/events.lua'))(), 'failed to get event manager')
+local PlayerService 			= getservice(game, 'Players')
 
 local Connections 				= {}
 
