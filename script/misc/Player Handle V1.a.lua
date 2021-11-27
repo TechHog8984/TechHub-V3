@@ -1,3 +1,4 @@
+--slightly modified Player Handle. might merge into the real one.
 local httpget 					= game.HttpGet
 local getservice 				= game.GetService
 
