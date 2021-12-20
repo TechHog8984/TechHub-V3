@@ -16,14 +16,6 @@ function table.insert(Table, Value)
 
     Table[length + 1] = Value
 end
-function table.remove(Table, Value)
-    local index = (table.find(Table, Value))
-    if index then
-        Table[index] = nil
-    else
-        return error(tostring(Value) .. ' does not exist in table "' .. tostring(Table) .. '"', 2)
-    end
-end
 
 function table.find(Table, Value)
     for I, V in next, Table do
@@ -52,6 +44,22 @@ function table.findlowerbyindex(Table, Index)
         if I and Index and tostring(I):lower() == tostring(Index):lower() then
             return I, V
         end
+    end
+end
+
+function table.remove(Table, Value)
+    local index = (table.find(Table, Value))
+    if index then
+        Table[index] = nil
+    else
+        return error(tostring(Value) .. ' does not exist in table "' .. tostring(Table) .. '"', 2)
+    end
+end
+function table.removebyindex(Table, Index)
+    if Table[Index] then
+        Table[Index] = nil
+    else
+        return error(tostring(Index) .. ' is not a valid index in table "' .. tostring(Table) .. '"', 2)
     end
 end
 
