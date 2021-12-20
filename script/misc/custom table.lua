@@ -52,14 +52,14 @@ function table.remove(Table, Value)
     if index then
         Table[index] = nil
     else
-        return error(tostring(Value) .. ' does not exist in table "' .. tostring(Table) .. '"', 2)
+        --return error(tostring(Value) .. ' does not exist in table "' .. tostring(Table) .. '"', 2)
     end
 end
 function table.removebyindex(Table, Index)
-    if Table[Index] then
+    if Table[Index] ~= nil then
         Table[Index] = nil
     else
-        return error(tostring(Index) .. ' is not a valid index in table "' .. tostring(Table) .. '"', 2)
+        --return error(tostring(Index) .. ' is not a valid index in table "' .. tostring(Table) .. '"', 2)
     end
 end
 
