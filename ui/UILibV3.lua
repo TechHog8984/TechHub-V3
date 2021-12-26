@@ -119,6 +119,10 @@ function library:CreateGui(guiname, titletext, subtitletext)
 	function object:GetCloseEvent()
 		return closeEvent
 	end
+	function object:Destroy()
+		closeEvent:Fire()
+		gui:Destroy()
+	end
 
 	close.MouseButton1Click:connect(function()
 		closeEvent:Fire()
