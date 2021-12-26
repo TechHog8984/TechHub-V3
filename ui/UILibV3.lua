@@ -120,7 +120,6 @@ function library:CreateGui(guiname, titletext, subtitletext)
 		return closeEvent
 	end
 	function object:Destroy()
-		closeEvent:Fire()
 		gui:Destroy()
 	end
 
